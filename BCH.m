@@ -1,3 +1,6 @@
+%variables
+n = 256; %number of bits in codeword
+
 %encode codeword
 %c = zeros(1,255);
 c = [1 0 0 0 0 0 1];
