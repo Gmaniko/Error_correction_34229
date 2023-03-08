@@ -18,7 +18,7 @@ begin
   MULTIPLY : process (input)
   begin
 
-	shiftInput <= (inputPoly(1 downto 0) & "0")
+	shiftInput <= (input(1 downto 0) & "0")
 	
 	if (inputPoly(2) = '0') then
 		output <= shiftInput;
