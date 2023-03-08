@@ -29,10 +29,11 @@ for i = length(r)-1:-1:1
     end
     S3 = bitxor(S3, [zeros(1,length(S3)-1) r(i)]);
 
+    % (alpha * S1) + r_i
     u = S1(1);
-    S1 = [S1(2:end) 0];
-    if u == 1
-        S1 = bitxor(S1,P(2:end)); 
+    S1 = [S1(2:end) 0]; %shiftrow
+    if u == 1 %if overflow
+        S1 = bitxor(S1,P(2:end)); %then xor with primitive
     end
     S1 = bitxor(S1, [zeros(1,length(S1)-1) r(i)]);
 end
