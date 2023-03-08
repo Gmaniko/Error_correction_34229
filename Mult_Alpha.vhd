@@ -20,7 +20,7 @@ begin
 
 	shiftInput <= (input(1 downto 0) & "0")
 	
-	if (inputPoly(2) = '0') then
+	if (input(2) = '0') then
 		output <= shiftInput;
 	else
 		output <= (shiftInput xor "011");
