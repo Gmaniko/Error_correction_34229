@@ -4,7 +4,7 @@
 %encode codeword
 %c = zeros(1,255);
 %c = [0 0 0 0 0 0 0];
-c = [1 0 1 1 0 1 0];
+c = [1 0 0 1 1 1 0];
 %add noise to received bits
 p = 0.00;
 n = rand(1,length(c)) < p;
@@ -37,6 +37,11 @@ for i = length(r)-1:-1:1
     end
     S1 = bitxor(S1, [zeros(1,length(S1)-1) r(i)]);
 end
+if ~any(S1) || ~any(S3)
+    error('Cannot be decoded')
+    
+end
+
 
 %Calculate table that returns polynomial given alpha power + 1
 alpha = zeros(7,3);
@@ -57,13 +62,13 @@ for i = 1:7
 end
 
 %S1 to the third power in terms of alpha
-s1pow3 = mod(alphainv(polyval(S1,2),:)*3,2^(length(P)-1) - 1)
+s1pow3 = mod(alphainv(polyval(S1,2),:)*3,2^(length(P)-1) - 1);
 %S3 in terms of alpha
-s3pow1 = alphainv(polyval(S3,2),:)
+s3pow1 = alphainv(polyval(S3,2),:);
 %s1pow3 divided by s3pow1 in terms of alpha
-s1pow3s3 = mod(s3pow1 - s1pow3,2^(length(P)-1) - 1)
+s1pow3s3 = mod(s3pow1 - s1pow3,2^(length(P)-1) - 1);
 %add 1 in terms of polynomials
-rat = alphainv(polyval(bitxor(alpha(s1pow3s3+1,:), [0 0 1]),2))
+rat = alphainv(polyval(bitxor(alpha(s1pow3s3+1,:), [0 0 1]),2));
 
 
 %find y = x/S1
