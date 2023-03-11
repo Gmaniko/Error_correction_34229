@@ -4,7 +4,7 @@
 %encode codeword
 %c = zeros(1,255);
 %c = [0 0 0 0 0 0 0];
-c = [0 0 0 0 0 0 1];
+c = [0 0 0 0 0 1 0];
 %add noise to received bits
 p = 0.00;
 n = rand(1,length(c)) < p;
@@ -71,9 +71,10 @@ s1pow3 = mod(alphainv(polyval(S1,2))*3,2^(length(P)-1) - 1);
 %S3 in terms of alpha
 s3pow1 = alphainv(polyval(S3,2));
 
-if s1pow3 == s3pow1
-    error('No errors were found.')
-end
+% if s1pow3 == s3pow1
+%     error('No errors were found.')
+% end
+
 %s1pow3 divided by s3pow1 in terms of alpha
 s1pow3s3 = mod(s3pow1 - s1pow3,2^(length(P)-1) - 1);
 %add 1 in terms of polynomials
@@ -83,6 +84,9 @@ rat = bitxor(alpha(s1pow3s3+1,:), [0 0 1]);
 
 %find y = x/S1
 y = [];
+if isequal(rat,zeros(1,length(P)-1))
+    y = [y 0];
+end
 for i = 1:6
     temp = bitxor(alpha(mod(2*i,2^(length(P)-1) - 1)+1,:),alpha(i+1,:));
     if temp == rat
