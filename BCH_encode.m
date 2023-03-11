@@ -16,7 +16,6 @@ for i=1:length(R)
     end
     
     R(i:n+i) = bitxor(R(i:n+i),G);
-    
 end
 %truncate
 R = R(end-(n-1):end);
