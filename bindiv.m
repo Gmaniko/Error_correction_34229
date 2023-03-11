@@ -1,7 +1,9 @@
 function [remainder] = bindiv(dividend, divisor)
 
-remainder = [dividend zeros(1,length(divisor)-1)];
-n = length(divisor);
+n = length(divisor) - 1;
+
+remainder = [dividend zeros(1,n)];
+
 
 for i=1:length(remainder)
     if polyval(divisor,2) > polyval(remainder,2)
@@ -11,8 +13,8 @@ for i=1:length(remainder)
         continue
     end
     
-    remainder(i:n+i-1) = bitxor(remainder(i:n+i-1),divisor);
+    remainder(i:n+i) = bitxor(remainder(i:n+i),divisor);
     
 end
 
-remainder = remainder(end-(length(divisor)-1):end);
+remainder = remainder(end-(n-1):end);
