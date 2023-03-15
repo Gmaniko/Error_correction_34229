@@ -1,3 +1,7 @@
 
 *.asv
 Python/*
+VHDL/BCH.cr.mti
+VHDL/BCH.mpf
+VHDL/transcript
+VHDL/work/*
