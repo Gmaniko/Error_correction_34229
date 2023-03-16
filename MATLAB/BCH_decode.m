@@ -32,7 +32,7 @@ end
 % given the exponent of the primitive element.
 alpha = zeros(N, m);
 alpha(1,:) = [zeros(1, m-1) 1];
-for i =2:N
+for i = 2:N
     u = alpha(i-1,1);
     alpha(i,:) = [alpha(i-1,2:end) 0];
     if u ==1
@@ -49,13 +49,17 @@ end
 
 % If both syndromes are zero then R is a code word.
 if ~any(S1) && ~any(S3)
-    error('No errors were found.')
+    %disp('No errors were found.')
+    dec_message = R;
+    return
 end
 
 % If one of the syndromes are zero then there are more than two errors
 % in the received sequence R. 
 if ~any(S1) || ~any(S3)
-    error('Cannot be decoded (One of the syndromes equal 0).')
+    %disp('Cannot be decoded (One of the syndromes equal 0).')
+    dec_message = R;
+    return
 end
 
 % S1 as exponent of primitive element to the third power
@@ -63,10 +67,13 @@ s1pow3 = mod(alphainv(polyval(S1, 2))*3, 2^m - 1);
 % S3 as exponent of primitive element
 s3pow1 = alphainv(polyval(S3, 2));
 
+
 %if S1^3 is equal to S3 then R is a code word.
-if s1pow3 == s3pow1
-    error('No errors were found.')
-end
+% if s1pow3 == s3pow1
+%     disp('No errors were found.')
+%     dec_message = R;
+%     return
+% end
 
 % Subtracting the exponents 
 s1pow3s3 = mod(s3pow1 - s1pow3, 2^m - 1);
