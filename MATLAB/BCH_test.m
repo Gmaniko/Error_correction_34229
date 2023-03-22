@@ -13,7 +13,7 @@ C = BCH_encode(X);
 
 noise = zeros(1,N);
 rng('shuffle')
-err_loc = randi(255,1,2);
+err_loc = randi(N,1,2);
 noise(err_loc) = 1;
 %Received information is code word with two errors
 R = bitxor(C,noise);

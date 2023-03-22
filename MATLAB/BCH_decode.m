@@ -2,12 +2,13 @@ function dec_message = BCH_decode(R)
 
 %Primitive polynomial of GF(256)
 P = [1,0,0,0,1,1,1,0,1];
+%P = [1,0,1,1];
 m = length(P) - 1;
 N = length(R);
 
 S1 = [zeros(1, m-1) R(1)];
 S3 = [zeros(1, m-1) R(1)];
-% Calculate  syndromes S1 and S3 by evaluating R as a polynomial in GF(256)
+% Calculate  syndromes S1 and S3 by evaluating R as a polynomial in GF(2^8)
 % , in the primitive element as R(alpha) for S1 and R(alpha^3) for S3.
 for i = 2:N
     % (alpha * S1) + r_i

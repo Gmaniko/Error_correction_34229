@@ -2,7 +2,7 @@ function C = BCH_encode(X)
 
 %Generator polynomial for BCH(255,239)
 G = [1,0,1,1,0,1,1,1,1,0,1,1,0,0,0,1,1];
-
+%G = [1, 1, 1, 1, 1, 1, 1];
 d = length(G) - 1;
 %Initialize remainder
 R = [X zeros(1,d)];
