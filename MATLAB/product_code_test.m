@@ -11,7 +11,7 @@ K = 239;
 %Add noise
 %
 %p = linspace(0.00847,0.01257,12);
-p = linspace(0.0085,0.0125,12);
+p = linspace(0.0065,0.0125,15);
 iter = 1:10;
 BER = zeros(length(iter), length(p));
 channel = zeros(1,length(p));
