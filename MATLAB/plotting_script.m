@@ -1,5 +1,5 @@
 figure
-semilogy(p(3:end-2), channel(3:end-2), 'DisplayName',sprintf('Channel'), ...
+semilogy(p, channel, 'DisplayName',sprintf('Channel'), ...
     'Marker','.','LineWidth',1.5, 'MarkerSize',15)
 hold on
 xlabel('p')
@@ -8,10 +8,10 @@ ylabel('BER')
 
 xlim([0.008 0.013])
 ylim([10^(-10) 10^(-1)])
-semilogy(p(3:end-2),BER(1,3:end-2), 'DisplayName',sprintf('%d iteration',1), ...
+semilogy(p,BER(1,:), 'DisplayName',sprintf('%d iteration',1), ...
     'Marker','.','LineWidth',1.5, 'MarkerSize',15)
 for i = 2:iter(end)
-    semilogy(p(3:end-2),BER(i,3:end-2), 'DisplayName',sprintf('%d iterations',i), ...
+    semilogy(p,BER(i,:), 'DisplayName',sprintf('%d iterations',i), ...
         'Marker','.','LineWidth',1.5, 'MarkerSize',15)
 end
 legend('Location','south')
