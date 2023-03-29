@@ -1,0 +1,9 @@
+sync matlab = mads og alex
+sync vhdl = mads og alex
+
+encode matrix matlab og print vhdl = mads og nic
+decode parity xor tree og print vhdl = mads og nic
+
+encode vhdl = nic
+syndrome vhdl = mads
+error = nic
