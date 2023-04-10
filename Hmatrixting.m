@@ -9,7 +9,7 @@ for i = 1:n
    H(2,i+1) = (3)*(i);
 end
 
-%Primitive polynomial of GF(256)
+%Primitive polynomial of GF(2^4)
 %P = [1,0,0,1,1];
 P = [1,0,0,0,0,1,1];
 m = length(P) - 1;
