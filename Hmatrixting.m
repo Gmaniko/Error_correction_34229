@@ -1,3 +1,4 @@
+%---- STEP 1, create matrix with alpha^x values ----
 n=15;
 H = zeros(2, n);
 
@@ -9,7 +10,9 @@ for i = 1:n
    H(2,i+1) = (3)*(i);
 end
 
-%Primitive polynomial of GF(2^4)
+%---- STEP 1.2, map matrix from alpha to bit values ----
+
+%Primitive polynomial of GF(256)
 %P = [1,0,0,1,1];
 P = [1,0,0,0,0,1,1];
 m = length(P) - 1;
@@ -24,3 +27,20 @@ for i = 2:N
         alpha(i,:) = bitxor(alpha(i,:), P(2:end));
     end
 end
+
+alphainv = zeros(N,1);
+for i = 1:N
+    alphainv(polyval(alpha(i,:),2)) = i-1;
+end
+
+
+%step 1.3 tranpose h and complete matrix multiplication
+
+
+
+%n=15 example
+htest = [1,0,0,0,1,0,0,1,1,0,1,0,1,1,1;0,1,0,0,1,1,0,1,0,1,1,1,1,0,0;0,0,1,0,0,1,1,0,1,0,1,1,1,1,0;0,0,0,1,0,0,1,1,0,1,0,1,1,1,1;1,0,0,0,1,1,0,0,0,1,1,0,0,0,1;0,0,0,1,1,0,0,0,1,1,0,0,0,1,1;0,0,1,0,1,0,0,1,0,1,0,0,1,0,1;0,1,1,1,1,0,1,1,1,1,0,1,1,1,1];
+c0 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+c1 = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+c0*transpose(htest)
+c1*transpose(htest)
