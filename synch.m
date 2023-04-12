@@ -1,20 +1,43 @@
-StartPattern = [1 0 1 0 1 0];
+clc
+clear all
+StartPattern = [1 0 1 0 1 0 1 0];
 rng('default')
-NoiseBefore = randi([0 1],1,20);
-NoiseAfter = randi([0 1],1,20);
-Payload = randi([0 1],1,255);
+rand = randi([1 100],1,1);
+NoiseBefore = randi([0 1],1,rand(1));
+%NoiseAfter = randi([0 1],1,20);
+%Payload = randi([0 1],1,255);
 
-msg = [NoiseBefore StartPattern Payload NoiseAfter]
+%noise
+msg = [NoiseBefore];
+%message to be appended
+appndMsg = [StartPattern randi([0 1],1,255);];
+                        %^^^Ensures each payload is random
 
-for i=1:length(msg)
-    if msg(i:i+5) == StartPattern
-        r = msg(i+6:(i+6)+254);
-        break;
+for i=1:10
+    msg = [msg, appndMsg];
+end
+
+check = 1;
+
+for i = 1:length(msg)
+    if msg(i:i+7) == StartPattern
+        check = 1;
+        for j = 2:5
+            if (msg((i+(8+255)*j):(i+7+(8+255)*j))) == StartPattern
+                check = check + 1;
+                if check == 5
+                    break;
+                end
+            end
+        end
+        if check == 5
+            break;
+        end
     end
 end
 
-if r == Payload
-    sprintf('synch OK.')
+if check == 5
+    disp('check ok')
 else
-    sprintf('synk KO')
+    disp('check not ok')
 end
