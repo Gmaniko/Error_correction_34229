@@ -43,60 +43,77 @@ end
 
 fileID = fopen('VHDL.txt','w');
 %fprintf(fileID,'S1 = S1(1) xor R(1) & S1(2) & S1(3) & S1(4) & S1(5) xor R(1) & S1(6) xor R(1) & S1(7) xor R(1) & S1(8);\n');
+
+s = "S1(0) = S1(0) ";
 for i = 1:255
-s = "S1 = ";
-
-if HS1(i,1) == 1
-s = s + sprintf('(S1(0) xor R(%d)) & ', i-1);
-else
-s = s + "S1(0) & ";
+    if HS1(i,1) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
 end
-
-if HS1(i,2) == 1
-s = s + sprintf('(S1(1) xor R(%d)) & ', i-1);
-else
-s = s + "S1(1) & ";
-end
-
-if HS1(i,3) == 1
-s = s + sprintf('(S1(2) xor R(%d)) & ', i-1);
-else
-s = s + "S1(2) & ";
-end
-
-if HS1(i,4) == 1
-s = s + sprintf('(S1(3) xor R(%d)) & ', i-1);
-else
-s = s + "S1(3) & ";
-end
-
-if HS1(i,5) == 1
-s = s + sprintf('(S1(4) xor R(%d)) & ', i-1);
-else
-s = s + "S1(4) & ";
-end
-
-if HS1(i,6) == 1
-s = s + sprintf('(S1(5) xor R(%d)) & ', i-1);
-else
-s = s + "S1(5) & ";
-end
-
-if HS1(i,7) == 1
-s = s + sprintf('(S1(6) xor R(%d)) & ', i-1);
-else
-s = s + "S1(6) & ";
-end
-
-if HS1(i,8) == 1
-s = s + sprintf('(S1(7) xor R(%d)) & ', i-1);
-else
-s = s + "S1(7) & ";
-end
-
 s = s + ";\n";
-
 fprintf(fileID,s);
 
+s = "S1(1) = S1(1) ";
+for i = 1:255
+    if HS1(i,2) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
 end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S1(2) = S1(2) ";
+for i = 1:255
+    if HS1(i,3) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S1(3) = S1(3) ";
+for i = 1:255
+    if HS1(i,4) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S1(4) = S1(4) ";
+for i = 1:255
+    if HS1(i,5) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S1(5) = S1(5) ";
+for i = 1:255
+    if HS1(i,6) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S1(6) = S1(6) ";
+for i = 1:255
+    if HS1(i,7) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S1(7) = S1(7) ";
+for i = 1:255
+    if HS1(i,8) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
 fclose(fileID);
