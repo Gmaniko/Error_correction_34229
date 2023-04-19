@@ -5,3 +5,6 @@ VHDL/BCH.cr.mti
 VHDL/BCH.mpf
 VHDL/transcript
 VHDL/work/*
+VHDL/vsim.wlf
+*.mti
+*.mpf
