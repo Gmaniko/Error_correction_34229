@@ -2,11 +2,11 @@
 
 X = eye(239);
 X = fliplr(X);
-P = zeros(239,16);
+P = zeros(239,17);
 
 for i = 1:239
-    C = BCH_encode(X(i,:));
-    P(i,:) = C(end-15:end);
+    C = BCHE_encode(X(i,:));
+    P(i,:) = C(end-16:end);
 end
 [rows, cols] = size(P);
 fileID = fopen("enc_vhdl_text.txt","w");

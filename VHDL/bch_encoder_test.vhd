@@ -7,26 +7,26 @@ use IEEE.std_logic_textio.all;
 library STD;
 use STD.textio.all;
 
-entity encoder_test is
+entity bch_encoder_test is
 end entity;
 
 
-architecture arch of encoder_test is
+architecture arch of bch_encoder_test is
 
 	signal X_test : std_logic_vector(238 downto 0);
-	signal C_test : std_logic_vector(254 downto 0);
+	signal C_test : std_logic_vector(255 downto 0);
 	
-	component Encoder is
+	component bch_encoder is
 		port( 
 			X  : in std_logic_vector(238 downto 0); 
-			C : out std_logic_vector(254 downto 0)
+			C : out std_logic_vector(255 downto 0)
 		);
 	end component;
 	
 	begin
 	
 	
-	DUT : Encoder port map (X_test, C_test);
+	DUT : bch_encoder port map (X_test, C_test);
 	
 	STIMULUS : process
 	
@@ -34,7 +34,7 @@ architecture arch of encoder_test is
 		variable current_line : line;
 		begin
 		
-			X_test <= "01111010111101001100100101111011011101001011000001000000011000101101110111111001000001111001110001111011100110100011000110110110100001111100111011100100010110000001101111011110101100011001000001000011100000010001100010001000011101010001100";
+			X_test <= "10000011110111000110110101111010101010001010000101101100000010111010000100100110100001110100111001011010001111001010001010101100100001101010111011111000010101110110110010100110010100011100011101011110001000001000101110110110110000011001101";
 			wait for 125 ns;
 			write(current_line, C_test);
 			writeline(OUTPUT, current_line);
