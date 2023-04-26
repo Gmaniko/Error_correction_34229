@@ -1,9 +1,10 @@
-sync matlab = mads og alex
+sync matlab = mads og alex, in progress
 sync vhdl = mads og alex
 
-encode matrix matlab og print vhdl = mads og nic
-decode parity xor tree og print vhdl = mads og nic
+encode matrix matlab og print vhdl = mads og nic, DONE
+decode parity xor tree og print vhdl = mads og nic, DONE
 
-encode vhdl = nic
-syndrome vhdl = mads
+encode vhdl = nic, DONE
+syndrome vhdl = mads, DONE
 error = nic
+product code??
