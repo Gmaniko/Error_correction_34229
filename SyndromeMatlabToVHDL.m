@@ -44,7 +44,7 @@ end
 fileID = fopen('VHDL.txt','w');
 %fprintf(fileID,'S1 = S1(1) xor R(1) & S1(2) & S1(3) & S1(4) & S1(5) xor R(1) & S1(6) xor R(1) & S1(7) xor R(1) & S1(8);\n');
 
-s = "S1(0) = S1(0) ";
+s = "S1(0) <= ";
 for i = 1:255
     if HS1(i,1) == 1
         s = s + sprintf('xor R(%d) ', i-1);
@@ -53,7 +53,7 @@ end
 s = s + ";\n";
 fprintf(fileID,s);
 
-s = "S1(1) = S1(1) ";
+s = "S1(1) <= ";
 for i = 1:255
     if HS1(i,2) == 1
         s = s + sprintf('xor R(%d) ', i-1);
@@ -62,7 +62,7 @@ end
 s = s + ";\n";
 fprintf(fileID,s);
 
-s = "S1(2) = S1(2) ";
+s = "S1(2) <= ";
 for i = 1:255
     if HS1(i,3) == 1
         s = s + sprintf('xor R(%d) ', i-1);
@@ -71,7 +71,7 @@ end
 s = s + ";\n";
 fprintf(fileID,s);
 
-s = "S1(3) = S1(3) ";
+s = "S1(3) <= ";
 for i = 1:255
     if HS1(i,4) == 1
         s = s + sprintf('xor R(%d) ', i-1);
@@ -80,7 +80,7 @@ end
 s = s + ";\n";
 fprintf(fileID,s);
 
-s = "S1(4) = S1(4) ";
+s = "S1(4) <= ";
 for i = 1:255
     if HS1(i,5) == 1
         s = s + sprintf('xor R(%d) ', i-1);
@@ -89,7 +89,7 @@ end
 s = s + ";\n";
 fprintf(fileID,s);
 
-s = "S1(5) = S1(5) ";
+s = "S1(5) <= ";
 for i = 1:255
     if HS1(i,6) == 1
         s = s + sprintf('xor R(%d) ', i-1);
@@ -98,7 +98,7 @@ end
 s = s + ";\n";
 fprintf(fileID,s);
 
-s = "S1(6) = S1(6) ";
+s = "S1(6) <= ";
 for i = 1:255
     if HS1(i,7) == 1
         s = s + sprintf('xor R(%d) ', i-1);
@@ -107,7 +107,7 @@ end
 s = s + ";\n";
 fprintf(fileID,s);
 
-s = "S1(7) = S1(7) ";
+s = "S1(7) <= ";
 for i = 1:255
     if HS1(i,8) == 1
         s = s + sprintf('xor R(%d) ', i-1);
@@ -116,5 +116,81 @@ end
 s = s + ";\n";
 fprintf(fileID,s);
 
-fclose(fileID);
 
+
+fprintf(fileID,"");
+
+
+s = "S3(0) <= ";
+for i = 1:255
+    if HS3(i,1) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S3(1) <= ";
+for i = 1:255
+    if HS3(i,2) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S3(2) <= ";
+for i = 1:255
+    if HS3(i,3) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S3(3) <= ";
+for i = 1:255
+    if HS3(i,4) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S3(4) <= ";
+for i = 1:255
+    if HS3(i,5) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S3(5) <= ";
+for i = 1:255
+    if HS3(i,6) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S3(6) <= ";
+for i = 1:255
+    if HS3(i,7) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+s = "S3(7) <= ";
+for i = 1:255
+    if HS3(i,8) == 1
+        s = s + sprintf('xor R(%d) ', i-1);
+    end
+end
+s = s + ";\n";
+fprintf(fileID,s);
+
+fclose(fileID);
