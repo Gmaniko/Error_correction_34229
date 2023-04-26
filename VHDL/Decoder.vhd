@@ -4,6 +4,10 @@ use IEEE.numeric_std.all;
 use IEEE.std_logic_unsigned.all;
 
 entity Decoder is
+		port(  
+		ADC_CLK_10  : in std_logic;
+		output : out std_logic_vector(7 downto 0)
+		);
 end entity;
 
 architecture Decoder_arch of Decoder is
@@ -525,7 +529,7 @@ constant ROM_alphaInv : ROM_type2 := ( 1 => 0,
 signal test : std_logic_vector(254 downto 0);
 signal S1 : std_logic_vector(7 downto 0);
 signal S3 : std_logic_vector(7 downto 0);
-signal s1pow3, s3pow1, s1pow3s3 : integer;
+signal s1pow3, s3pow1, s1pow3s3, x1, x2, y : integer;
 signal rat : std_logic_vector(7 downto 0);
 
 
@@ -554,6 +558,7 @@ test <= "11100011001010100000011010000110010000001000011111011011111000011011001
 
 process (S1)
 begin
+	output <= S1;
 	if (to_integer(unsigned(S1)) > 0) then
 		s1pow3 <= ROM_alphaInv(to_integer(unsigned(S1)))*3 mod 255;
   end if;
@@ -579,6 +584,20 @@ begin
 	rat <= ROM_alpha((s1pow3s3+1)) xor ROM_alpha(1);
 	end if;
 end process;
+
+
+--if (rat = "00000000") then
+-- only calc x2?
+--else
+
+--end if;
+
+
+
+--% x = y * S1
+--x = 255 - mod(y+alphainv(polyval(S1,2),:), 2^m - 1);
+--x1 <= 255 - ( y1 + (to_integer(unsigned(S1))) mod 255)
+--x2 <= 255 - ( y2 + (to_integer(unsigned(S1))) mod 255)
 
 
 DUT1 : Syndrome1Calc
