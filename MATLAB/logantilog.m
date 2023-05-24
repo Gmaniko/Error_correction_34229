@@ -14,5 +14,5 @@ end
 
 alphainv = zeros(N,1);
 for i = 1:N
-    alphainv(polyval(alpha(i,:),2)) = i-1;
+    alphainv(BinToDec(alpha(i,:))) = i-1;
 end

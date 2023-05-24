@@ -1,4 +1,4 @@
-function [dec_pattern, match] = BCH_decode_v2(R, pr)
+function [dec_pattern, match] = BCH_decode_v2(R, pr, alpha, alphainv)
 
 %Primitive polynomial of GF(256)
 P = [1,0,0,0,1,1,1,0,1];
@@ -43,9 +43,10 @@ end
 
 % Calculate antilog-table that returns the exponent of the primitive element
 % given element of the Galois field.
-if exist("alpha", 'var') == 0
-    [alpha, alphainv] = logantilog(N,P);
-end
+
+% if exist("alpha", 'var') == 0
+%     [alpha, alphainv] = logantilog(N,P);
+% end
 
 % If both syndromes are zero then R is a code word.
 if ~any(S1) && ~any(S3)
@@ -58,14 +59,14 @@ end
 % in the received sequence R. 
 if ~any(S1) || ~any(S3)
     %disp('Cannot be decoded (One of the syndromes equal 0).')
-    dec_pattern = zeros(1,N);
+    dec_pattern = ones(1,N);
     return
 end
 
 % S1 as exponent of primitive element to the third power
-s1pow3 = mod(alphainv(polyval(S1, 2))*3, 2^m - 1);
+s1pow3 = mod(alphainv(BinToDec(S1))*3, 2^m - 1);
 % S3 as exponent of primitive element
-s3pow1 = alphainv(polyval(S3, 2));
+s3pow1 = alphainv(BinToDec(S3));
 
 
 % Subtracting the exponents 
@@ -87,7 +88,7 @@ for i = 1:N-1
     end
 end
 % x = y * S1
-x = 255 - mod(y+alphainv(polyval(S1,2),:), 2^m - 1);
+x = 255 - mod(y+alphainv(BinToDec(S1),:), 2^m - 1);
 
 % Use roots as error locations
 dec_pattern = zeros(1,N);
