@@ -1,4 +1,4 @@
-function dec_message = BCH_decode(R)
+function dec_message = BCH_decode(R, alpha, alphainv)
 
 %Primitive polynomial of GF(256)
 P = [1,0,0,0,1,1,1,0,1];
@@ -31,22 +31,11 @@ end
 
 % Calculate log-table that returns an element of the Galois field
 % given the exponent of the primitive element.
-alpha = zeros(N, m);
-alpha(1,:) = [zeros(1, m-1) 1];
-for i = 2:N
-    u = alpha(i-1,1);
-    alpha(i,:) = [alpha(i-1,2:end) 0];
-    if u ==1
-        alpha(i,:) = bitxor(alpha(i,:), P(2:end));
-    end
-end
+
 
 % Calculate antilog-table that returns the exponent of the primitive element
 % given element of the Galois field.
-alphainv = zeros(N,1);
-for i = 1:N
-    alphainv(polyval(alpha(i,:),2)) = i-1;
-end
+
 
 % If both syndromes are zero then R is a code word.
 if ~any(S1) && ~any(S3)
