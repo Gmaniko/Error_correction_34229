@@ -1,24 +1,35 @@
-%Constants for BCH(255,239)
-% N: Code word length
-% K: Message length
+
+% Code word length
 N = 255;
+% Message length
 K = 239;
 
+%Define primitive polynomial
+PrimPoly = [1,0,0,0,1,1,1,0,1];
 
-%Message
-rng('default')
+%Generate log/antilog tables
+[alpha, alphainv] = logantilog(N, PrimPoly);
+
+
+% Generate random information bits
 X = randi([0 1],1,K);
 
+% Encode
 C = BCH_encode(X);
 
-noise = zeros(1,N);
-rng('shuffle')
-err_loc = randi(N,1,2);
-noise(err_loc) = 1;
-%Received information is code word with two errors
+
+
+% Number of errors
+err_n = 2;
+% Generate noise
+noise = zeros(1,length(C));
+noise(randperm(length(C),err_n)) = 1;
+
+% Received information is code word with err_n errors
 R = bitxor(C,noise);
 
-dec_message = BCH_decode(R);
+% Decode
+dec_message = BCH_decode(R, alpha, alphainv);
 
 if isequal(dec_message,C)
     sprintf('Succesfully decoded.')

@@ -1,20 +1,28 @@
 N = 255;
 K = 239;
 
-%rng('default')
+%Define primitive polynomial
+PrimPoly = [1,0,0,0,1,1,1,0,1];
+%Generate log/antilog tables
+[alpha, alphainv] = logantilog(N, PrimPoly);
+
+% Generate random information bits
 X = randi([0 1],1,K);
 
+% Encode
 C = BCHE_encode(X);
 
-
+% Number of errors
+err_n = 3;
+% Generate noise
 noise = zeros(1,length(C));
-rng('shuffle')
-err_loc = randi(length(C),1,3);
-noise(err_loc) = 1;
-%Received information is code word with two errors
+noise(randperm(length(C),err_n)) = 1;
+
+% Received information is code word with err_n errors
 R = bitxor(C,noise);
 
-dec_message = BCHE_decode(R);
+% Decode
+dec_message = BCHE_decode(R,alpha, alphainv);
 
 if isequal(dec_message,C)
     sprintf('Succesfully decoded.')

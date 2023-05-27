@@ -1,4 +1,5 @@
 function dec_message = BCH_decode(R, alpha, alphainv)
+% Decodes a received sequence R with the BCH(255,239) code.
 
 %Primitive polynomial of GF(256)
 P = [1,0,0,0,1,1,1,0,1];
@@ -53,9 +54,9 @@ if ~any(S1) || ~any(S3)
 end
 
 % S1 as exponent of primitive element to the third power
-s1pow3 = mod(alphainv(polyval(S1, 2))*3, 2^m - 1);
+s1pow3 = mod(alphainv(BinToDec(S1))*3, 2^m - 1);
 % S3 as exponent of primitive element
-s3pow1 = alphainv(polyval(S3, 2));
+s3pow1 = alphainv(BinToDec(S3));
 
 
 %if S1^3 is equal to S3 then R is a code word.
@@ -84,7 +85,7 @@ for i = 1:N-1
     end
 end
 % x = y * S1
-x = 255 - mod(y+alphainv(polyval(S1,2),:), 2^m - 1);
+x = 255 - mod(y+alphainv(BinToDec(S1),:), 2^m - 1);
 
 % Use roots as error locations
 dec_pattern = zeros(1,N);

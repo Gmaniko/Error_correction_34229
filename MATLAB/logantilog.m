@@ -1,7 +1,10 @@
 function [alpha, alphainv] = logantilog(N, P)
+% Generates log/antilog tables.
 
 m = length(P) - 1;
 
+% Calculate log-table that returns an element of the Galois field
+% given the exponent of the primitive element.
 alpha = zeros(N, m);
 alpha(1,:) = [zeros(1, m-1) 1];
 for i = 2:N
@@ -12,6 +15,8 @@ for i = 2:N
     end
 end
 
+% Calculate antilog-table that returns the exponent of the primitive element
+% given element of the Galois field.
 alphainv = zeros(N,1);
 for i = 1:N
     alphainv(BinToDec(alpha(i,:))) = i-1;

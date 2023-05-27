@@ -1,21 +1,24 @@
 function [dec_pattern, match] = BCH_decode_v2(R, pr, alpha, alphainv)
 
-%Primitive polynomial of GF(256)
+% Primitive polynomial of GF(256)
 P = [1,0,0,0,1,1,1,0,1];
-%P = [1,0,1,1];
+
 m = length(P) - 1;
 
 N = length(R);
 
+% Check parity bits for equality
 pc = mod(sum(R),2);
 if pc == pr
-    match = +1;
+    match = true;
 else
-    match = -1;
+    match = false;
 end
 
+% Initialize syndromes
 S1 = [zeros(1, m-1) R(1)];
 S3 = [zeros(1, m-1) R(1)];
+
 % Calculate  syndromes S1 and S3 by evaluating R as a polynomial in GF(2^8)
 % , in the primitive element as R(alpha) for S1 and R(alpha^3) for S3.
 for i = 2:N
@@ -37,20 +40,8 @@ for i = 2:N
     S3 = bitxor(S3, [zeros(1, m-1) R(i)]);
 end
 
-% Calculate log-table that returns an element of the Galois field
-% given the exponent of the primitive element.
-
-
-% Calculate antilog-table that returns the exponent of the primitive element
-% given element of the Galois field.
-
-% if exist("alpha", 'var') == 0
-%     [alpha, alphainv] = logantilog(N,P);
-% end
-
 % If both syndromes are zero then R is a code word.
 if ~any(S1) && ~any(S3)
-    %disp('No errors were found.')
     dec_pattern = zeros(1,N);
     return
 end
@@ -58,16 +49,15 @@ end
 % If one of the syndromes are zero then there are more than two errors
 % in the received sequence R. 
 if ~any(S1) || ~any(S3)
-    %disp('Cannot be decoded (One of the syndromes equal 0).')
     dec_pattern = ones(1,N);
     return
 end
 
 % S1 as exponent of primitive element to the third power
 s1pow3 = mod(alphainv(BinToDec(S1))*3, 2^m - 1);
+
 % S3 as exponent of primitive element
 s3pow1 = alphainv(BinToDec(S3));
-
 
 % Subtracting the exponents 
 s1pow3s3 = mod(s3pow1 - s1pow3, 2^m - 1);
@@ -82,6 +72,7 @@ if isequal(rat, zeros(1, m))
     y = [y 0];
 end
 for i = 1:N-1
+    % Search for y^2 + y = 1 + S3/(S1^3)
     temp = bitxor(alpha(mod(2*i, 2^m - 1)+1,:), alpha(i+1,:));
     if temp == rat
         y = [y i];

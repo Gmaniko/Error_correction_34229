@@ -22,7 +22,6 @@ for b = 1:100
     X = randi([0 1],K);
     C = product_code_enc(X);
     for j = 1:length(p)
-        rng('shuffle')
         noise = zeros(255);
         noise(randperm(255^2,round(p(j)*255^2))) = 1;
         R = bitxor(C,noise);
