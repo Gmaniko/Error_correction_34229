@@ -16,7 +16,7 @@ architecture arch of bch_encoder_test is
 	signal X_test : std_logic_vector(238 downto 0);
 	signal C_test : std_logic_vector(255 downto 0);
 	
-	component bch_encoder is
+	component bch_encoder
 		port( 
 			X  : in std_logic_vector(238 downto 0); 
 			C : out std_logic_vector(255 downto 0)

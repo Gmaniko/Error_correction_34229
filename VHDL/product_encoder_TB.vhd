@@ -13,7 +13,7 @@ end entity;
 
 architecture arch of product_encoder_TB is
 	
-	component product_encoder is
+	component product_encoder
 		port(
 			clk : std_logic;
 			rst : std_logic;

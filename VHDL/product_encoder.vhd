@@ -14,7 +14,7 @@ end entity;
 
 architecture product_encoder_arch of product_encoder is
 
-	component bch_encoder is
+	component bch_encoder
 		port( 
 			X  : in std_logic_vector(238 downto 0); 
 			C  : out std_logic_vector(255 downto 0)
