@@ -623,9 +623,7 @@ begin
 					if C_TB = C_data(clk_cnt-239) then
 						ok_cnt <= ok_cnt + 1;
 					end if;
-				
 				end if;
-				
 			end if;
 		end if;
 	end process;

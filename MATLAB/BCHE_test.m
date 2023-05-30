@@ -13,7 +13,7 @@ X = randi([0 1],1,K);
 C = BCHE_encode(X);
 
 % Number of errors
-err_n = 3;
+err_n = 2;
 % Generate noise
 noise = zeros(1,length(C));
 noise(randperm(length(C),err_n)) = 1;
