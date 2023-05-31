@@ -1,5 +1,6 @@
+%Author: Nikolai
 function dec_message = product_code_dec_v2(R, alpha, alphainv)
-
+% Product code decoder using extended BCH(256,239)
 dec_message = zeros(256);
 
 % Decode rows

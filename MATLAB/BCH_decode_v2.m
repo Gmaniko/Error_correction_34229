@@ -1,5 +1,6 @@
 % Author: Nikolai
-function [dec_pattern, match] = BCH_decode_v2(R, pr, alpha, alphainv)
+function [dec_pattern] = BCH_decode_v2(R, alpha, alphainv)
+% Decodes received sequence R and returns error pattern
 
 % Primitive polynomial of GF(256)
 P = [1,0,0,0,1,1,1,0,1];
@@ -8,14 +9,6 @@ m = length(P) - 1;
 
 N = length(R);
 
-% Check parity bits for equality
-pc = mod(sum(R),2);
-if pc == pr
-    match = true;
-else
-    match = false;
-end
-
 % Initialize syndromes
 S1 = [zeros(1, m-1) R(1)];
 S3 = [zeros(1, m-1) R(1)];
@@ -23,6 +16,7 @@ S3 = [zeros(1, m-1) R(1)];
 % Calculate  syndromes S1 and S3 by evaluating R as a polynomial in GF(2^8)
 % , in the primitive element as R(alpha) for S1 and R(alpha^3) for S3.
 for i = 2:N
+    % Calculate syndrome S1
     % (alpha * S1) + r_i
     u = S1(1);
     S1 = [S1(2:end) 0]; %shiftrow
@@ -30,7 +24,8 @@ for i = 2:N
         S1 = bitxor(S1, P(2:end)); %then xor with primitive
     end
     S1 = bitxor(S1, [zeros(1, m-1) R(i)]);
-
+    
+    % Calculate syndrome S3
     for j = 1:3
         u = S3(1);
         S3 = [S3(2:end) 0];
@@ -47,12 +42,8 @@ if ~any(S1) && ~any(S3)
     return
 end
 
-% If one of the syndromes are zero then there are more than two errors X
-% in the received sequence R. X
-
 % If S1 is 0 then S1^3 is also zero => division by zero
-
-if ~any(S1) % || ~any(S3)
+if ~any(S1)
     dec_pattern = ones(1,N);
     return
 end
@@ -74,8 +65,6 @@ else
     % => bitxor(alpha(s1pow3s3+1,:), alpha(0+1,:)) = alpha(0+1,:)
     rat = alpha(0+1,:);
 end
-
-
 
 %find y = x/S1
 y = [];
@@ -101,3 +90,4 @@ end
 dec_pattern = zeros(1,N);
 dec_pattern(x) = 1;
 
+end

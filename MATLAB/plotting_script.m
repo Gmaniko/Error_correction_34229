@@ -18,7 +18,6 @@ for i = 2:iter(end)
         'Marker','.','LineWidth',1.5, 'MarkerSize',15)
 end
 legend('Location','south')
-%chH = get(gca,'Children');
-%set(gca,'Children',flipud(chH))
+
 grid on
 hold off

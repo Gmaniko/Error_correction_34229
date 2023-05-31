@@ -6,7 +6,16 @@ function dec_message = BCHE_decode(Re, alpha, alphainv)
 R = Re(1:end-1);
 pr = Re(end);
 
-[dec_pattern, match] = BCH_decode_v2(R, pr, alpha, alphainv);
+% Check parity bits for equality
+pc = mod(sum(R),2);
+if pc == pr
+    match = true;
+else
+    match = false;
+end
+
+% Decode and return error pattern
+[dec_pattern] = BCH_decode_v2(R, alpha, alphainv);
 
 % Number of errors that can be corrected
 err_n = sum(dec_pattern);
@@ -34,4 +43,6 @@ elseif err_n == 2
     end
 else
     dec_message = Re;
+end
+
 end

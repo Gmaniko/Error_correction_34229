@@ -1,4 +1,6 @@
+%Author: Nikolai
 function C = product_code_enc_v2(X)
+% Product code encoder using extended BCH(256,239)
 
 C = zeros(256);
 for i = 1:239

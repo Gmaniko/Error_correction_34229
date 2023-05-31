@@ -1,3 +1,4 @@
+% Author: Nikolai
 function C = BCH_encode(X)
 % Encodes information sequence X with the BCH(255,239) code.
 
@@ -21,3 +22,5 @@ end
 R = R(end-(d-1):end);
 % Append to message
 C = [X R];
+
+end

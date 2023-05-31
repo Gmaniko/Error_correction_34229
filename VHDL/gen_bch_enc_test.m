@@ -1,4 +1,6 @@
 % Author: Nikolai
+% Generate testing data for bch_encoder.vhd
+
 fileID1 = fopen('bch_enc_test_X.txt','w');
 fileID2 = fopen('bch_enc_test_C.txt','w');
 

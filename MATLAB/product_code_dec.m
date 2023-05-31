@@ -1,9 +1,15 @@
+% Author: Nikolai
 function dec_message = product_code_dec(R, alpha, alphainv)
-%dec_message = R;
+% Product code decoder using BCH(255,239)
+
 dec_message = zeros(255);
 for j = 1:255
-    dec_message(j,:) = BCH_decode(R(j,:), alpha, alphainv);
+    dec_pattern = BCH_decode_v2(R(j,:), alpha, alphainv);
+    dec_message(j,:) = bitxor(R(j,:), dec_pattern);
 end
 for j = 1:255
-    dec_message(:,j) = BCH_decode(dec_message(:,j)', alpha, alphainv)';
+    dec_pattern = BCH_decode_v2(dec_message(:,j)', alpha, alphainv);
+    dec_message(:,j) = bitxor(dec_message(:,j)', dec_pattern)';
+end
+
 end

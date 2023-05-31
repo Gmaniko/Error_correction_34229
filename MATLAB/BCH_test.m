@@ -17,10 +17,9 @@ X = randi([0 1],1,K);
 % Encode
 C = BCH_encode(X);
 
-
-
 % Number of errors
 err_n = 2;
+
 % Generate noise
 noise = zeros(1,length(C));
 noise(randperm(length(C),err_n)) = 1;
@@ -29,7 +28,8 @@ noise(randperm(length(C),err_n)) = 1;
 R = bitxor(C,noise);
 
 % Decode
-dec_message = BCH_decode(R, alpha, alphainv);
+dec_pattern = BCH_decode_v2(R, alpha, alphainv);
+dec_message = bitxor(R, dec_pattern);
 
 if isequal(dec_message,C)
     sprintf('Succesfully decoded.')

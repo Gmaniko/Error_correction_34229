@@ -1,3 +1,4 @@
+% Author: Nikolai
 function [alpha, alphainv] = logantilog(N, P)
 % Generates log/antilog tables.
 
@@ -20,4 +21,6 @@ end
 alphainv = zeros(N,1);
 for i = 1:N
     alphainv(BinToDec(alpha(i,:))) = i-1;
+end
+
 end

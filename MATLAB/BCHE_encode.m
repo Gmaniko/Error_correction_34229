@@ -1,3 +1,4 @@
+% Author: Nikolai
 function C = BCHE_encode(X)
 % Encodes information sequence X with the extended BCH(256,239) code.
 
@@ -13,3 +14,5 @@ end
 
 % Append parity bit
 C = [C, p];
+
+end
