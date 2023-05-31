@@ -1,3 +1,4 @@
+--Author: Nikolai
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -54,13 +55,13 @@ begin
 			wait for 20 ns;
 			while clk_cnt < 494 loop
 				rst_TB <= '0';
-				if not endfile(Fin) then
+				if not endfile(Fin) then --Reads input
 					readline(Fin, current_read_line);
 					read(current_read_line, X_var);
 					X_TB <= X_var;
 				end if;
 				
-				if clk_cnt > 238 then
+				if clk_cnt > 238 then --Writes output
 					write(current_write_line, C_TB);
 					writeline(Fout, current_write_line);
 				end if;

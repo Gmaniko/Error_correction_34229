@@ -1,3 +1,4 @@
+--Author: Nikolai
 LIBRARY IEEE;
 USE IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -40,11 +41,9 @@ begin
 			MAT <= (others => (others => '0'));
 			cnt <= 0;
 			send <= '0';
-			--cur_col <= (others => '0');
-			--cur_row <= (others => '0');
 		elsif rising_edge(clk) then
 			if send = '0' then
-				if cnt > 0 then
+				if cnt > 0 then --Loads encoded message into memory
 					MAT(cnt-1) <= cur_row;
 				end if;
 				if cnt < 239 then 
@@ -53,7 +52,7 @@ begin
 					send <= '1';
 					cnt <= 0;
 				end if;
-			elsif send = '1' then
+			elsif send = '1' then --Begins encoding "columns" and sending them through the transmission channel
 				if cnt < 255 then
 					cnt <= cnt + 1;
 				else

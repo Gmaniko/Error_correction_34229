@@ -1,3 +1,4 @@
+--Author: Nikolai
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
@@ -27,15 +28,15 @@ architecture arch of bch_encoder_TB is
 	signal X_TB : std_logic_vector(238 downto 0);
 	signal C_TB : std_logic_vector(255 downto 0);
 	signal C_temp : std_logic_vector(255 downto 0);
-	signal ok_cnt : integer range 0 to 239;
-	signal clk_cnt : integer range 0 to 239;
+	signal ok_cnt : integer range 0 to 239; -- Counter for number of correctly encoded messages
+	signal clk_cnt : integer range 0 to 239; -- Counter for clock cycles
 	
 	begin
 	
 	
 	DUT : bch_encoder port map (clk_TB, rst_TB, X_TB, C_TB);
 	
-	CLKPROC : process
+	CLKPROC : process -- Process for virtual clock
   begin
     clk_TB <= '0';
     wait for 10 ns;
@@ -55,12 +56,12 @@ architecture arch of bch_encoder_TB is
 		begin
 		
 			while clk_cnt < 238 loop
-				if not endfile(X_data) then
+				if not endfile(X_data) then -- Read input data
 					readline(X_data, current_X_line);
 					read(current_X_line, X_var);
 					X_TB <= X_var;
 				end if;
-				if not endfile(C_data) then
+				if not endfile(C_data) then -- Read expected output
 					readline(C_data, current_C_line);
 					read(current_C_line, C_var);
 					C_temp <= C_var;
@@ -69,6 +70,7 @@ architecture arch of bch_encoder_TB is
 				wait for 20 ns;
 				
 				clk_cnt <= clk_cnt + 1;
+				-- Compare actual output and expected output
 				write(current_write_line, string'("Calc: "));
 				write(current_write_line, C_TB);
 				writeline(OUTPUT,current_write_line);
@@ -81,6 +83,7 @@ architecture arch of bch_encoder_TB is
 			end loop;
 			
 			wait for 20 ns;
+			-- Print results
 			write(current_write_line, string'("Correctly encoded messages: "));
 			write(current_write_line, ok_cnt);
 			writeline(OUTPUT, current_write_line);
