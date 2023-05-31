@@ -1,3 +1,4 @@
+% Author: Nikolai
 function [dec_pattern, match] = BCH_decode_v2(R, pr, alpha, alphainv)
 
 % Primitive polynomial of GF(256)

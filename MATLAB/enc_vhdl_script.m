@@ -1,4 +1,4 @@
-
+% Author: Nikolai
 
 X = eye(239);
 X = fliplr(X);

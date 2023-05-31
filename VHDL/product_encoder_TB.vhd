@@ -24,7 +24,7 @@ architecture arch of product_encoder_TB is
 	
 	signal clk_TB : std_logic;
   signal rst_TB : std_logic;
-	signal clk_cnt : integer range 0 to integer'high;
+	signal clk_cnt : integer range 0 to 495;
 	signal X_TB : std_logic_vector(238 downto 0);
 	signal C_TB : std_logic_vector(255 downto 0);
 	

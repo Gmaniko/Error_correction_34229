@@ -1,3 +1,4 @@
+% Author: Nikolai
 function dec_message = BCH_decode(R, alpha, alphainv)
 % Decodes a received sequence R with the BCH(255,239) code.
 
@@ -30,52 +31,45 @@ for i = 2:N
     S3 = bitxor(S3, [zeros(1, m-1) R(i)]);
 end
 
-% Calculate log-table that returns an element of the Galois field
-% given the exponent of the primitive element.
-
-
-% Calculate antilog-table that returns the exponent of the primitive element
-% given element of the Galois field.
-
-
 % If both syndromes are zero then R is a code word.
 if ~any(S1) && ~any(S3)
-    %disp('No errors were found.')
     dec_message = R;
     return
 end
 
-% If one of the syndromes are zero then there are more than two errors
-% in the received sequence R. 
-if ~any(S1) || ~any(S3)
-    %disp('Cannot be decoded (One of the syndromes equal 0).')
+% If one of the syndromes are zero then there are more than two errors X
+% in the received sequence R. X
+
+% If S1 is 0 then S1^3 is also zero => division by zero
+
+if ~any(S1) % || ~any(S3)
     dec_message = R;
     return
 end
 
 % S1 as exponent of primitive element to the third power
 s1pow3 = mod(alphainv(BinToDec(S1))*3, 2^m - 1);
-% S3 as exponent of primitive element
-s3pow1 = alphainv(BinToDec(S3));
 
+if any(S3)
+    % S3 as exponent of primitive element
+    s3pow1 = alphainv(BinToDec(S3));
+    
+    % Subtracting the exponents 
+    s1pow3s3 = mod(s3pow1 - s1pow3, 2^m - 1);
 
-%if S1^3 is equal to S3 then R is a code word.
-% if s1pow3 == s3pow1
-%     disp('No errors were found.')
-%     dec_message = R;
-%     return
-% end
+    % add 1 to get 1 + S3/(S1^3)
+    rat = bitxor(alpha(s1pow3s3+1,:), alpha(0+1,:));
+else
+    % alpha(s1pow3s3+1,:) = 0
+    % => bitxor(alpha(s1pow3s3+1,:), alpha(0+1,:)) = alpha(0+1,:)
+    rat = alpha(0+1,:);
+end
 
-% Subtracting the exponents 
-s1pow3s3 = mod(s3pow1 - s1pow3, 2^m - 1);
-
-% add 1 to get 1 + S3/(S1^3)
-rat = bitxor(alpha(s1pow3s3+1,:), alpha(0+1,:));
 
 
 %find y = x/S1
 y = [];
-if isequal(rat, zeros(1, m))
+if ~any(rat)
     y = [y 0];
 end
 for i = 1:N-1
@@ -85,7 +79,12 @@ for i = 1:N-1
     end
 end
 % x = y * S1
-x = 255 - mod(y+alphainv(BinToDec(S1),:), 2^m - 1);
+if any(S1)
+    x = 255 - mod(y+alphainv(BinToDec(S1)), 2^m - 1);
+else
+    % x = y * S1 = 0
+    x = 255;
+end
 
 % Use roots as error locations
 dec_pattern = zeros(1,N);

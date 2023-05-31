@@ -594,7 +594,7 @@ architecture HWTB_arch of Encoder_Top is
 	signal X_TB : std_logic_vector(238 downto 0);
 	signal C_TB : std_logic_vector(255 downto 0);
 	signal ok_cnt : std_logic_vector(7 downto 0);
-	signal clk_cnt : integer range 0 to 494;
+	signal clk_cnt : integer range 0 to 495;
 	signal act : std_logic;
 	
 begin

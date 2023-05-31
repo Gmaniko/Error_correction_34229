@@ -1,3 +1,5 @@
+% Author: Nikolai
+
 N = 255;
 K = 239;
 %Define primitive polynomial

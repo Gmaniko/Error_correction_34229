@@ -1,3 +1,4 @@
+% Author: Nikolai
 function dec_message = BCHE_decode(Re, alpha, alphainv)
 % Decodes received sequence Re with the extended BCH(256,239) code.
 

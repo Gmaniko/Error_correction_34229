@@ -15,7 +15,8 @@ end entity;
 architecture product_encoder_arch of product_encoder is
 
 	component bch_encoder
-		port( 
+		port(
+			clk, rst : in std_logic;
 			X  : in std_logic_vector(238 downto 0); 
 			C  : out std_logic_vector(255 downto 0)
 		);
@@ -30,8 +31,8 @@ architecture product_encoder_arch of product_encoder is
 
 begin
 
-	bch_enc_row : bch_encoder port map(X, cur_row);
-	bch_enc_col : bch_encoder port map(cur_col, C);
+	bch_enc_row : bch_encoder port map(clk, rst, X, cur_row);
+	bch_enc_col : bch_encoder port map(clk, rst, cur_col, C);
 	
 	process (clk, rst)
 	begin
@@ -43,8 +44,10 @@ begin
 			--cur_row <= (others => '0');
 		elsif rising_edge(clk) then
 			if send = '0' then
-				MAT(cnt) <= cur_row;
-				if cnt < 238 then 
+				if cnt > 0 then
+					MAT(cnt-1) <= cur_row;
+				end if;
+				if cnt < 239 then 
 					cnt <= cnt + 1;
 				else 
 					send <= '1';

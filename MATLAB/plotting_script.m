@@ -1,3 +1,5 @@
+% Author: Nikolai
+
 % Visualizes performance of product code
 figure
 semilogy(p, channel, 'DisplayName',sprintf('Channel'), ...

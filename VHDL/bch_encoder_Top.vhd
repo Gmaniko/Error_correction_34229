@@ -80,6 +80,7 @@ architecture HWTB_arch of bch_encoder_Top is
 
 	component bch_encoder
 		port (
+			clk, rst : in std_logic;
 			X   : in  std_logic_vector(238 downto 0);
 			C   : out std_logic_vector(255 downto 0)
 		);
@@ -597,7 +598,7 @@ architecture HWTB_arch of bch_encoder_Top is
 	
 begin
 
-	bch_enc : bch_encoder port map(X_TB, C_TB);
+	bch_enc : bch_encoder port map(ADC_CLK_10, SW(0), X_TB, C_TB);
 	
 	LEDR <= ok_cnt;
 	
