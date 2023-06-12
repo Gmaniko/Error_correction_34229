@@ -9,7 +9,7 @@ entity Encoder_Top is
   port (
 		KEY        : in std_logic_vector(0 downto 0);
 		SW         : in std_logic_vector(0 downto 0);
-		ADC_CLK_10 : in std_logic;
+		CLOCK_50   : in std_logic;
 		LEDR       : out std_logic_vector(7 downto 0)
   );
 end entity;
@@ -539,17 +539,17 @@ architecture HWTB_arch of Encoder_Top is
 	
 begin
 
-	prod_enc : product_encoder port map(ADC_CLK_10, SW(0), X_TB, C_TB);
+	prod_enc : product_encoder port map(CLOCK_50, SW(0), X_TB, C_TB);
 	
 	LEDR <= ok_cnt;
 	
-	PROC_TOP : process(ADC_CLK_10, SW(0))
+	PROC_TOP : process(CLOCK_50, SW(0))
 	
 	begin
 		if SW(0) = '1' then
 			ok_cnt <= (others => '0');
 			clk_cnt <= 0;
-		elsif rising_edge(ADC_CLK_10) then
+		elsif rising_edge(CLOCK_50) then
 			if KEY(0) = '0' then
 				act <= '1';
 			end if;

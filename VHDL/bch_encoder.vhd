@@ -17,6 +17,8 @@ architecture bch_encoder_arch of bch_encoder is
 	
 	signal P : std_logic_vector(16 downto 0); -- Parity bit vector
 	signal temp : std_logic_vector(255 downto 0);
+	type SR_type is array (0 to 2) of std_logic_vector(0 to 255);
+	signal SR : SR_type;
 	
 	begin
 	
@@ -41,13 +43,19 @@ P(0) <= X(0) xor X(1) xor X(3) xor X(5) xor X(8) xor X(9) xor X(10) xor X(11) xo
 
 	temp <= X & P;
 	
+	
+	
 	-- Register
 	process (clk, rst)
 		begin
 			if rst = '1' then
 				C <= (others => '0');
 			elsif rising_edge(clk) then
-				C <= temp;
+				SR(0) <= temp;
+				for i in 1 to SR'length-1 loop
+					SR(i) <= SR(i-1);
+				end loop;
+				C <= SR(SR'length-1);
 			end if;
 	end process;
 	

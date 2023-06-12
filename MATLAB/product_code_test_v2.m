@@ -32,9 +32,8 @@ for b = 1:runs
     for j = 1:length(p)
 
         % Generate noise
-        noise = zeros(N+1);
-        noise(randperm(256^2,round(p(j)*256^2))) = 1;
-
+        noise = rand(N+1) < p(j);
+        fprintf('%d',nnz(noise));
         % "Received" code
         R = bitxor(C,noise);
 

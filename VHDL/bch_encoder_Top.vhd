@@ -9,7 +9,7 @@ entity bch_encoder_Top is
   port (
 		KEY        : in std_logic_vector(0 downto 0);
 		SW         : in std_logic_vector(0 downto 0);
-		ADC_CLK_10 : in std_logic;
+		CLOCK_50   : in std_logic;
 		LEDR       : out std_logic_vector(7 downto 0)
   );
 end entity;
@@ -20,7 +20,7 @@ end entity;
 
 architecture HWTB_arch of bch_encoder_Top is
 
-	component bch_encoder
+	component bch_encoder_v2
 		port (
 			clk, rst : in std_logic;
 			X   : in  std_logic_vector(238 downto 0);
@@ -541,17 +541,17 @@ architecture HWTB_arch of bch_encoder_Top is
 	
 begin
 
-	bch_enc : bch_encoder port map(ADC_CLK_10, SW(0), X_TB, C_TB);
+	bch_enc : bch_encoder_v2 port map(CLOCK_50, SW(0), X_TB, C_TB);
 	
 	LEDR <= ok_cnt;
 	
-	PROC_TOP : process(ADC_CLK_10, SW(0))
+	PROC_TOP : process(CLOCK_50, SW(0))
 	
 	begin
 		if SW(0) = '1' then
 			ok_cnt <= (others => '0');
 			clk_cnt <= 0;
-		elsif rising_edge(ADC_CLK_10) then
+		elsif rising_edge(CLOCK_50) then
 			if KEY(0) = '0' then -- Activate encoder on KEY(0) press
 				act <= '1';
 			end if;
@@ -561,8 +561,8 @@ begin
 				if clk_cnt < 239 then -- Send data through Encoder
 					X_TB <= X_data(clk_cnt);
 				end if;
-				if clk_cnt > 238 then
-					if C_TB = C_data(clk_cnt-239) then -- Compare with expected result
+				if clk_cnt > 2 then
+					if C_TB = C_data(clk_cnt-3) then -- Compare with expected result
 						ok_cnt <= ok_cnt + 1;
 					end if;
 				

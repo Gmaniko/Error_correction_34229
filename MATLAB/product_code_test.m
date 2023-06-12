@@ -19,8 +19,7 @@ for b = 1:100
     C = product_code_enc(X);
     for j = 1:length(p)
         % Generate noise
-        noise = zeros(255);
-        noise(randperm(255^2,round(p(j)*255^2))) = 1;
+        noise = rand(N) < p(j);
         R = bitxor(C,noise);
         channel(j) = channel(j) + sum(noise,'all')/(255^2);
         dec_message = R;
