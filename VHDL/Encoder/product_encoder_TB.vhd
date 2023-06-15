@@ -14,25 +14,25 @@ end entity;
 
 architecture arch of product_encoder_TB is
 	
-	component product_encoder
+	component product_encoder_v3
 		port(
 			clk : std_logic;
 			rst : std_logic;
-			X   : in std_logic_vector(238 downto 0); 
+			X   : in std_logic; 
 			C   : out std_logic_vector(255 downto 0)
 		);
 	end component;
 	
 	signal clk_TB : std_logic;
   signal rst_TB : std_logic;
-	signal clk_cnt : integer range 0 to 495;
-	signal X_TB : std_logic_vector(238 downto 0);
+	signal clk_cnt : integer range 0 to 238;
+	signal X_TB : std_logic;
 	signal C_TB : std_logic_vector(255 downto 0);
 	
 begin
 	
 	
-	DUT : product_encoder port map (clk_TB, rst_TB, X_TB, C_TB);
+	DUT : product_encoder_v3 port map (clk_TB, rst_TB, X_TB, C_TB);
 	
 	CLKPROC : process
   begin
@@ -53,23 +53,20 @@ begin
 			
 			rst_TB <= '1';
 			wait for 20 ns;
-			while clk_cnt < 494 loop
-				rst_TB <= '0';
-				if not endfile(Fin) then --Reads input
-					readline(Fin, current_read_line);
-					read(current_read_line, X_var);
-					X_TB <= X_var;
-				end if;
+			rst_TB <= '0';
+			loop --Reads input
+				exit when endfile(Fin);
+				readline(Fin, current_read_line);
+				read(current_read_line, X_var);
 				
-				if clk_cnt > 238 then --Writes output
-					write(current_write_line, C_TB);
-					writeline(Fout, current_write_line);
-				end if;
-				
-				wait for 20 ns;
-				clk_cnt <= clk_cnt + 1;
+				while clk_cnt /= 238 loop
+					X_TB <= X_var(238-clk_cnt);
+					clk_cnt <= clk_cnt + 1;
+					wait for 20 ns;
+				end loop;
+				clk_cnt <= 0;
+
 			end loop;
-			
 			wait;
 	end process;
 	
