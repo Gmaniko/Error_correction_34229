@@ -25,9 +25,10 @@ architecture arch of product_encoder_TB is
 	
 	signal clk_TB : std_logic;
   signal rst_TB : std_logic;
-	signal clk_cnt : integer range 0 to 238;
+	signal clk_cnt : std_logic_vector(3 downto 0);
 	signal X_TB : std_logic;
 	signal C_TB : std_logic_vector(255 downto 0);
+	constant test_data : std_logic_vector(15 downto 0) := "1111001000111001";
 	
 begin
 	
@@ -50,22 +51,14 @@ begin
 		variable current_write_line : line;
 		variable X_var : std_logic_vector(238 downto 0);
 		begin
-			
+			clk_cnt <= "0000";
 			rst_TB <= '1';
 			wait for 20 ns;
 			rst_TB <= '0';
-			loop --Reads input
-				exit when endfile(Fin);
-				readline(Fin, current_read_line);
-				read(current_read_line, X_var);
-				
-				while clk_cnt /= 238 loop
-					X_TB <= X_var(238-clk_cnt);
-					clk_cnt <= clk_cnt + 1;
-					wait for 20 ns;
-				end loop;
-				clk_cnt <= 0;
-
+			loop
+				X_TB <= test_data(15-To_integer(unsigned(clk_cnt)));
+				clk_cnt <= clk_cnt + 1;
+				wait for 20 ns;
 			end loop;
 			wait;
 	end process;

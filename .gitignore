@@ -10,3 +10,4 @@ VHDL/Encoder/output_files/*
 VHDL/Encoder/transcript
 *.wlf
 VHDL/Encoder/work/*
+*.bak
