@@ -2898,10 +2898,16 @@ end process;
 s1pow3s3 <= ROM_MOD((s3pow1 - s1pow3));
 
 
-process (s1pow3s3) --rat = bitxor(alpha(s1pow3s3+1,:), alpha(0+1,:));
+process (s1pow3s3, S3) --rat = bitxor(alpha(s1pow3s3+1,:), alpha(0+1,:));
 begin
 	if (s1pow3s3 >= 0) then
-	rat <= ROM_alpha((s1pow3s3+1)) xor ROM_alpha(1);
+	
+		if (S3 = "00000000") then
+			rat <= ROM_alpha(1);
+		else
+			rat <= ROM_alpha((s1pow3s3+1)) xor ROM_alpha(1);
+		end if;
+	
 	end if;
 end process;
 
