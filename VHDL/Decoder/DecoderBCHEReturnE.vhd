@@ -2850,7 +2850,7 @@ signal S1 : std_logic_vector(7 downto 0);
 signal S3 : std_logic_vector(7 downto 0);
 signal s1pow3, s3pow1, s1pow3s3 : integer;
 signal rat : std_logic_vector(7 downto 0);
-signal y1, y2, e1pos, e2pos : integer range 0 to 255;
+signal y1, y2, e1pos, e2pos, e1posmatlab, e2posmatlab : integer range 0 to 255;
 
 component Syndrome1Calc is
 	port( 
@@ -2926,8 +2926,12 @@ process(y1,y2,clock) --x = 255 - mod(y+alphainv(BinToDec(S1),:), 2^m - 1);
 begin
 
 if (to_integer(unsigned(S1)) > 0) then --- MINUS 1 because of the VHLD indexing
-e1pos <= (255 - (ROM_MOD(y1 + ROM_alphaInv(to_integer(unsigned(S1))) ))) -1;
-e2pos <= (255 - (ROM_MOD(y2 + ROM_alphaInv(to_integer(unsigned(S1))) ))) -1;
+
+e1posmatlab <= ((255 - (ROM_MOD(y1 + ROM_alphaInv(to_integer(unsigned(S1))) ))));
+e2posmatlab <= ((255 - (ROM_MOD(y2 + ROM_alphaInv(to_integer(unsigned(S1))) ))));
+
+e1pos <= (255-(255 - (ROM_MOD(y1 + ROM_alphaInv(to_integer(unsigned(S1))) ))));
+e2pos <= (255-(255 - (ROM_MOD(y2 + ROM_alphaInv(to_integer(unsigned(S1))) ))));
 end if;
 
 end process;
@@ -2952,14 +2956,14 @@ end if;
 end process;
 
 
-process(epattern1,epattern2, e1pos, e2pos) --x = 255 - mod(y+alphainv(BinToDec(S1),:), 2^m - 1);
+process(epattern1,epattern2, e1pos, e2pos, e1posmatlab, e2posmatlab) --x = 255 - mod(y+alphainv(BinToDec(S1),:), 2^m - 1);
 begin
 
 epattern <= epattern1 xor epattern2;
 
-if (e1pos > 0 and e2pos > 0) then
+if (e1posmatlab > 0 and e2posmatlab > 0) then
 ecnt <= 2;
-elsif (e1pos > 0 or e2pos > 0) then
+elsif (e1posmatlab > 0 or e2posmatlab > 0) then
 ecnt <= 1;
 else
 ecnt <= 0;

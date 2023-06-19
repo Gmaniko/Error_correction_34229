@@ -118,8 +118,11 @@ begin
 			output <= input;
 			Decision <= 6;
 		end if;
-
+		
 	else
+
+		output <= input;
+		Decision <= 7;
 
 	end if;
 
