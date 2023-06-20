@@ -31,23 +31,6 @@ architecture bch_encoder_v2_arch of bch_encoder_v2 is
 	
 	-- XOR TREE
 
-	-- XOR TREE
-	
-	-- Register storing X
-	-- X_SR : process (clk, rst)
-	-- 	begin
-	-- 		if rst = '1' then
-	-- 			X_REG <= (others => (others => '0'));
-	-- 		elsif rising_edge(clk) then
-	-- 			X_REG(0) <= X;
-	-- 			for i in 1 to X_REG'length-1 loop
-	-- 				X_REG(i) <= X_REG(i-1);
-	-- 			end loop;
-	-- 			C <= X_REG(X_REG'length - 1) & P;
-	-- 		end if;
-	-- end process;
-	
-	
 	S0_REG : process(clk,rst)
 		begin
 			if rst = '1' then

@@ -5,7 +5,7 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSEMA5F31C6
-set_global_assignment -name TOP_LEVEL_ENTITY product_encoder_v3
+set_global_assignment -name TOP_LEVEL_ENTITY bch_encoder_v2
 set_global_assignment -name CYCLONEII_RESERVE_NCEO_AFTER_CONFIGURATION "USE AS REGULAR IO"
 
 
@@ -384,12 +384,17 @@ set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
-set_global_assignment -name VHDL_FILE product_encoder_v3.vhd
-set_global_assignment -name VHDL_FILE Encoder_Top.vhd
-set_global_assignment -name VHDL_FILE bch_encoder_v2.vhd
-set_global_assignment -name VHDL_FILE bch_encoder_Top.vhd
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name ALLOW_REGISTER_MERGING OFF
+set_global_assignment -name SYNTH_MESSAGE_LEVEL HIGH
+set_global_assignment -name VHDL_INPUT_VERSION VHDL_2008
+set_global_assignment -name VHDL_SHOW_LMF_MAPPING_MESSAGES OFF
+set_global_assignment -name SYNTHESIS_EFFORT FAST
+set_global_assignment -name FITTER_EFFORT "FAST FIT"
+set_global_assignment -name VHDL_FILE Encoder_Top.vhd
+set_global_assignment -name VHDL_FILE product_encoder_v3.vhd
+set_global_assignment -name VHDL_FILE bch_encoder_v2.vhd
 set_global_assignment -name VHDL_FILE PISO_SR.vhd
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top

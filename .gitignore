@@ -12,3 +12,4 @@ VHDL/Encoder/transcript
 VHDL/Encoder/work/*
 *.bak
 Python/*
+VHDL/Encoder/.qsys_edit/*

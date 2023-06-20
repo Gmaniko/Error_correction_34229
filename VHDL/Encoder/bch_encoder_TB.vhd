@@ -18,7 +18,7 @@ architecture arch of bch_encoder_TB is
 		port(
 			clk, rst : in std_logic;
 			X  : in std_logic_vector(238 downto 0); 
-			C : out std_logic_vector(255 downto 0)
+			P : out std_logic_vector(16 downto 0)
 		);
 	end component;
 	
@@ -26,15 +26,15 @@ architecture arch of bch_encoder_TB is
 	signal clk_TB : std_logic;
   signal rst_TB : std_logic;
 	signal X_TB : std_logic_vector(238 downto 0);
-	signal C_TB : std_logic_vector(255 downto 0);
-	signal C_temp : std_logic_vector(255 downto 0);
+	signal P_TB : std_logic_vector(16 downto 0);
+	signal P_temp : std_logic_vector(16 downto 0);
 	signal ok_cnt : integer range 0 to 239; -- Counter for number of correctly encoded messages
 	signal clk_cnt : integer range 0 to 242; -- Counter for clock cycles
 	
 	begin
 	
 	
-	DUT : bch_encoder_v2 port map (clk_TB, rst_TB, X_TB, C_TB);
+	DUT : bch_encoder_v2 port map (clk_TB, rst_TB, X_TB, P_TB);
 	
 	CLKPROC : process -- Process for virtual clock
   begin
@@ -47,12 +47,12 @@ architecture arch of bch_encoder_TB is
 	STIMULUS : process
 	
 		file X_data : TEXT open READ_MODE is "bch_enc_test_X.txt";
-		file C_data : TEXT open READ_MODE IS "bch_enc_test_C.txt";
+		file P_data : TEXT open READ_MODE IS "bch_enc_test_P.txt";
 		variable current_X_line : line;
-		variable current_C_line : line;
+		variable current_P_line : line;
 		variable current_write_line : line;
 		variable X_var : std_logic_vector(238 downto 0);
-		variable C_var : std_logic_vector(255 downto 0);
+		variable P_var : std_logic_vector(16 downto 0);
 		begin
 		
 			while clk_cnt < 241 loop
@@ -61,10 +61,10 @@ architecture arch of bch_encoder_TB is
 					read(current_X_line, X_var);
 					X_TB <= X_var;
 				end if;
-				if not endfile(C_data) and clk_cnt > 1 then -- Read expected output
-					readline(C_data, current_C_line);
-					read(current_C_line, C_var);
-					C_temp <= C_var;
+				if not endfile(P_data) and clk_cnt > 0 then -- Read expected output
+					readline(P_data, current_P_line);
+					read(current_P_line, P_var);
+					P_temp <= P_var;
 				end if;
 
 				wait for 20 ns;
@@ -73,12 +73,12 @@ architecture arch of bch_encoder_TB is
 				-- Compare actual output and expected output
 				if clk_cnt > 2 then
 					write(current_write_line, string'("Calc: "));
-					write(current_write_line, C_TB);
+					write(current_write_line, P_TB);
 					writeline(OUTPUT,current_write_line);
 					write(current_write_line, string'("Data: "));
-					write(current_write_line, C_temp);
+					write(current_write_line, P_temp);
 					writeline(OUTPUT,current_write_line);
-					if C_temp = C_TB then
+					if P_temp = P_TB then
 							ok_cnt <= ok_cnt + 1;
 					end if;
 				end if;

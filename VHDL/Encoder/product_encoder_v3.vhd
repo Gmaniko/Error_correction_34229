@@ -48,11 +48,9 @@ architecture product_encoder_v3_arch of product_encoder_v3 is
 	signal ws : std_logic;
 	signal p  : std_logic;
 	
-	-- type MAT_type is array (0 to 238) of std_logic_vector(0 to 255);
-	-- signal MAT1, MAT2 : MAT_type;
-
-	type RAM_type is array (0 to 61183) of std_logic;
-	signal RAM0, RAM1 : RAM_type;
+	signal RAM0, RAM1 : std_logic_vector(0 to 61183);
+	-- type RAM_type is array (0 to 61183) of std_logic;
+	-- signal RAM0, RAM1 : RAM_type;
 	
 begin	
 
