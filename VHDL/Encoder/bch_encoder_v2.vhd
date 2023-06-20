@@ -8,14 +8,14 @@ entity bch_encoder_v2 is
 	port (
 		clk, rst : in std_logic;
 		X : in  std_logic_vector(238 downto 0);
-		C : out std_logic_vector(255 downto 0)
+		P : out std_logic_vector(16 downto 0)
 	);
 end entity;
 
 
 architecture bch_encoder_v2_arch of bch_encoder_v2 is
 	
-	signal P : std_logic_vector(16 downto 0); -- Parity bit vector
+	-- signal P : std_logic_vector(16 downto 0); -- Parity bit vector
 	type SR_type is array (0 to 2) of std_logic_vector(0 to 238);
 	signal X_REG : SR_type;
 	signal temp_6, temp_10 : std_logic_vector(16 downto 0);
@@ -34,18 +34,18 @@ architecture bch_encoder_v2_arch of bch_encoder_v2 is
 	-- XOR TREE
 	
 	-- Register storing X
-	X_SR : process (clk, rst)
-		begin
-			if rst = '1' then
-				X_REG <= (others => (others => '0'));
-			elsif rising_edge(clk) then
-				X_REG(0) <= X;
-				for i in 1 to X_REG'length-1 loop
-					X_REG(i) <= X_REG(i-1);
-				end loop;
-				C <= X_REG(X_REG'length - 1) & P;
-			end if;
-	end process;
+	-- X_SR : process (clk, rst)
+	-- 	begin
+	-- 		if rst = '1' then
+	-- 			X_REG <= (others => (others => '0'));
+	-- 		elsif rising_edge(clk) then
+	-- 			X_REG(0) <= X;
+	-- 			for i in 1 to X_REG'length-1 loop
+	-- 				X_REG(i) <= X_REG(i-1);
+	-- 			end loop;
+	-- 			C <= X_REG(X_REG'length - 1) & P;
+	-- 		end if;
+	-- end process;
 	
 	
 	S0_REG : process(clk,rst)

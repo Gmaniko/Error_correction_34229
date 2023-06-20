@@ -8,7 +8,7 @@ use ieee.std_logic_unsigned.all;
 entity Encoder_Top is
   port (
 		KEY        : in std_logic_vector(0 downto 0);
-		SW         : in std_logic_vector(0 downto 0);
+		SW         : in std_logic_vector(1 downto 0);
 		CLOCK_50   : in std_logic;
 		LEDR       : out std_logic_vector(7 downto 0)
   );
@@ -21,6 +21,7 @@ architecture HWTB_arch of Encoder_Top is
 		port (
 			clk : std_logic;
 			rst : std_logic;
+			en  : std_logic;
 			X   : in  std_logic;
 			C   : out std_logic_vector(255 downto 0)
 		);
@@ -532,6 +533,7 @@ architecture HWTB_arch of Encoder_Top is
 );
 	
 	signal X_TB : std_logic;
+	signal en_TB : std_logic;
 	signal C_TB : std_logic_vector(255 downto 0);
 	signal ok_cnt : std_logic_vector(7 downto 0);
 	signal clk_cnt : integer range 0 to 3199;
@@ -540,9 +542,10 @@ architecture HWTB_arch of Encoder_Top is
 	
 begin
 
-	prod_enc : product_encoder_v3 port map(CLOCK_50, SW(0), X_TB, C_TB);
+	prod_enc : product_encoder_v3 port map(CLOCK_50, SW(0), X_TB, en_TB, C_TB);
 	
 	LEDR <= ok_cnt;
+	en_TB <= SW(1);
 	
 	PROC_TOP : process(CLOCK_50, SW(0))
 	

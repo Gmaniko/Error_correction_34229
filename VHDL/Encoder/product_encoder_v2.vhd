@@ -1,3 +1,4 @@
+
 --Author: Nikolai
 LIBRARY IEEE;
 USE IEEE.std_logic_1164.all;
@@ -8,7 +9,7 @@ entity product_encoder_v2 is
 	port (
 		clk : std_logic;
 		rst : std_logic;
-		X   : in  std_logic_vector(238 downto 0);
+		X   : in  std_logic;
 		C   : out std_logic_vector(255 downto 0)
 	);
 end entity;

@@ -11,3 +11,4 @@ VHDL/Encoder/transcript
 *.wlf
 VHDL/Encoder/work/*
 *.bak
+Python/*
