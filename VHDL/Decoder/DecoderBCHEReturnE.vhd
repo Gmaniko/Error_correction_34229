@@ -2878,7 +2878,7 @@ begin
 test <= input;
 end process;
 
-process (S1, clock)
+process (S1, clock, s1pow3)
 begin
 	if (to_integer(unsigned(S1)) > 0) then
 		s1pow3 <= ROM_MOD(ROM_alphaInv(to_integer(unsigned(S1)))*3); --log(s1^3)
@@ -2886,7 +2886,7 @@ begin
 end process;
 
 --% S3 as exponent of primitive element
-process (S3)
+process (S3,s3pow1)
 begin
 	if (to_integer(unsigned(S3)) > 0) then
 		s3pow1 <= ROM_alphaInv(to_integer(unsigned(S3))); --log(s3)
@@ -2899,7 +2899,7 @@ end process;
 s1pow3s3 <= ROM_MOD((s3pow1 - s1pow3));
 
 
-process (s1pow3s3, S3) --rat = bitxor(alpha(s1pow3s3+1,:), alpha(0+1,:));
+process (s1pow3s3, S3,rat) --rat = bitxor(alpha(s1pow3s3+1,:), alpha(0+1,:));
 begin
 	if (s1pow3s3 >= 0) then
 	
@@ -2913,7 +2913,7 @@ begin
 end process;
 
 
-process(rat)
+process(rat,y1,y2)
 begin
 if (to_integer(unsigned(rat)) > 0) then
 y1 <= ROM_yFirstMatch(ROM_alphaInv(to_integer(unsigned(rat))));
@@ -2922,7 +2922,7 @@ end if;
 end process;
 
 
-process(y1,y2,clock) --x = 255 - mod(y+alphainv(BinToDec(S1),:), 2^m - 1);
+process(y1,y2,clock,e1posmatlab,e2posmatlab,e1pos,e2pos) --x = 255 - mod(y+alphainv(BinToDec(S1),:), 2^m - 1);
 begin
 
 if (to_integer(unsigned(S1)) > 0) then --- MINUS 1 because of the VHLD indexing
@@ -2937,7 +2937,7 @@ end if;
 end process;
 
 
-process(e1pos,e2pos) --x = 255 - mod(y+alphainv(BinToDec(S1),:), 2^m - 1);
+process(e1pos,e2pos,epattern1,epattern2) --x = 255 - mod(y+alphainv(BinToDec(S1),:), 2^m - 1);
 begin
 
 if (y1 > 0 or y2 > 0) then

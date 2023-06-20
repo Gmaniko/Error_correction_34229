@@ -18,7 +18,7 @@ component DecoderBCHEReturnE is
 	port( 
 		clock  : in std_logic;
 		input  : in std_logic_vector(254 downto 0);
-		ecnt   : out integer;
+		ecnt   : out integer range 0 to 2;
 		epattern : out std_logic_vector(254 downto 0)
 	);
 end component;
@@ -33,7 +33,7 @@ end component;
 signal R : std_logic_vector(254 downto 0);
 signal pr, pc : std_logic;
 
-signal Decision : integer range 0 to 6;
+signal Decision : integer range 0 to 7;
 signal err_n : integer range 0 to 2;
 signal epattern : std_logic_vector(254 downto 0);
 signal match, tildepr : std_logic;
@@ -53,7 +53,7 @@ DUT1 : DecoderBCHEModSumHelper
 	);
 
 
-process(pc)
+process(pc,pr,match)
 begin
 
 if(pc = pr) then
@@ -80,7 +80,7 @@ DUT2 : DecoderBCHEReturnE
 
 --Decision tree
 
-DecisionTreeProcess : process(err_n,epattern)
+DecisionTreeProcess : process(err_n,epattern,pr,tildepr,match,Decision)
 begin
 
 	if (pr = '0') then

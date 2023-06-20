@@ -1,16 +1,19 @@
 LIBRARY IEEE;
 USE IEEE.std_logic_1164.all;
-USE IEEE.std_logic_textio.all;
 use IEEE.numeric_std.all;
 use IEEE.std_logic_unsigned.all;
 
-LIBRARY STD;
-USE STD.textio.all;
 
-entity DecoderBCHE_TB is
+entity mytest is
+	port (
+		CLOCK_50  : in std_logic;
+		LEDR	:		out std_logic_vector(7 downto 0) --OK/KO
+	);
 end entity;
 
-architecture DecoderBCHE_TB_arch of DecoderBCHE_TB is
+
+architecture mytest_Arch of mytest is
+
 
 component DecoderBCHE is
 		port(  
@@ -21,7 +24,7 @@ component DecoderBCHE is
 end component;
 
 --TB clock
-signal Clock, ok : std_logic;
+signal Clock, ok,ADC_CLK_10  : std_logic;
 constant clk_period: time:=10 ns;
 signal result : std_logic_vector(255 downto 0);
 signal test, check  : std_logic_vector(255 downto 0);
@@ -29,13 +32,13 @@ signal counter : integer range 1 to 100;
 signal okcnt : integer range 0 to 110;
 
 --FOR SINGLE TESTING
-type ROM_typeSingle is array (0 to 0) of std_logic_vector(255 downto 0);
-constant ROM_SINGLEin : ROM_typeSingle := ( 
-0 => "0100000111011100100111100101111110011010110000010111010100010010101011110111000011010110100111110000011001111101000101111110110101000001110111001100101001110000010011000011100010110100111101011101101110101001101110010011110000110101010110101111011100111111"
-);
-constant ROM_SINGLEout : ROM_typeSingle := ( 
-0 => "0100000111011100100111100101111110011010110000010111010100010010101011110111000011010110101111110000011001111101001101111110110101000001110111001100101001110000010011000011100010110100111101011101101110101001101110010011110000110101010110101111011100111111"
-);
+--type ROM_typeSingle is array (0 to 0) of std_logic_vector(255 downto 0);
+--constant ROM_SINGLEin : ROM_typeSingle := ( 
+--0 => "0100000111011100100111100101111110011010110000010111010100010010101011110111000011010110100111110000011001111101000101111110110101000001110111001100101001110000010011000011100010110100111101011101101110101001101110010011110000110101010110101111011100111111"
+--);
+--constant ROM_SINGLEout : ROM_typeSingle := ( 
+--0 => "0100000111011100100111100101111110011010110000010111010100010010101011110111000011010110101111110000011001111101001101111110110101000001110111001100101001110000010011000011100010110100111101011101101110101001101110010011110000110101010110101111011100111111"
+--);
 
 type ROM_type is array (1 to 100) of std_logic_vector(255 downto 0);
 constant ROM_C : ROM_type := ( 1 => "0001010011100001101000100010111010111111110010110001001010110010000011111100111110001000011100011100101010001000110010010001011110100111001101001001001010001011100010110111111001000100011110110101111010011011010010011000100000110010010111110001101111111010",
@@ -243,33 +246,68 @@ constant ROM_R : ROM_type := ( 1 => "0001010011100001001000100010111010111111110
 100 => "0101000101111111111111111110111100110101010100100111110111001011011111101000010001011001100010010011011010110000011011001010110010011110010001011110001101011110001011101110101110100101000100101010000111111101100101010101110110110110001010000010110110011110"
 );
 
+
 begin
 
-CLOCK_PROGRESS : process
-	begin
-		Clock<='0';
-		wait for clk_period/2;
-		Clock<='1';
-		wait for clk_period/2;
-end process;
+LEDR(7) <= '1';
 
-tester : process (Clock)
+ADC_CLK_10 <= CLOCK_50;
+
+tester : process (ADC_CLK_10, counter, test, check,ok, okcnt)
 begin
-if (Clock'event and Clock = '1') then
+if (ADC_CLK_10'event and ADC_CLK_10 = '1') then
+LEDR(6) <= '1';
+
 	--test <= ROM_R(0);
 	--check <= ROM_C(0);
-
-	if (counter = 100) then
-		counter <= 1;
+	
+	if (counter = 70) then
+		LEDR(5) <= '1';
+		counter <= 69;
 		test <= ROM_R(counter);
 		check <= ROM_C(counter);
+		
+		
+		if (okcnt > 0) then
+			LEDR(0) <= '1';
+		else
+			LEDR(0) <= '0';
+		end if;
+		
+		if (okcnt > 1) then
+			LEDR(1) <= '1';
+		else
+			LEDR(1) <= '0';
+		end if;
+		
+		if (okcnt > 60) then
+			LEDR(2) <= '1';
+		else
+			LEDR(2) <= '0';
+		end if;
+		
+		if (okcnt > 80) then
+			LEDR(3) <= '1';
+			LEDR(5) <= '1';
+		else
+			LEDR(3) <= '0';
+		end if;
+		
+		if (okcnt = 100) then
+			LEDR(4) <= '1';
+		else
+			LEDR(4) <= '0';
+		end if;
+		
+		
+		
 	else
 		counter <= counter + 1;
 		test <= ROM_R(counter);
 		check <= ROM_C(counter);
 	end if;
 	
-	if (counter = 1) then
+	if (counter = 70) then
 		if (ok = '1') then
 			okcnt <= 1;
 		else
@@ -285,10 +323,9 @@ if (Clock'event and Clock = '1') then
 end if;
 end process;
 
-
-checker : process (Clock,result)
+checker : process (ADC_CLK_10,result,check,ok)
 begin
-if (Clock'event and Clock = '1') then
+if (ADC_CLK_10'event and ADC_CLK_10 = '1') then
 	if (result = check) then
 		ok <= '1';
 	else
@@ -300,9 +337,11 @@ end process;
 
 dut : DecoderBCHE
 	port map(
-		clock  => Clock,
-		input	=> test, --ROM_SINGLEin(0), --test,
+		clock  => ADC_CLK_10,
+		input  => test, 
 		output => result
 	);
 
 end architecture;
+
+	
