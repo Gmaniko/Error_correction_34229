@@ -1,0 +1,225 @@
+m255
+K4
+z2
+!s11e MIXED_VERSIONS
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/WINDOWS/system32
+Esipo
+Z0 w1686747527
+Z1 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z2 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z3 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z4 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z5 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 785
+Z6 dC:/Users/aleks/Documents/ModelSim/SIPO
+Z7 8C:/Users/aleks/Documents/ModelSim/SIPO/SIPO.vhd
+Z8 FC:/Users/aleks/Documents/ModelSim/SIPO/SIPO.vhd
+l0
+L7 1
+VoJ1Q:kgogVh^C;LLL_clA0
+!s100 NnhS3=4U=9;UhoSfoi0U80
+Z9 OV;C;2020.1;71
+32
+Z10 !s110 1687329273
+!i10b 1
+Z11 !s108 1687329273.000000
+Z12 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/aleks/Documents/ModelSim/SIPO/SIPO.vhd|
+Z13 !s107 C:/Users/aleks/Documents/ModelSim/SIPO/SIPO.vhd|
+!i113 1
+Z14 o-work work -2002 -explicit
+Z15 tExplicit 1 CvgOpt 0
+Asipo_arch
+R1
+R2
+R3
+R4
+R5
+DEx4 work 4 sipo 0 22 oJ1Q:kgogVh^C;LLL_clA0
+!i122 785
+l18
+L16 12
+VWbXeE:z5ljBoz?11PLW^c3
+!s100 5009O0X?@@NghP@cON<CJ2
+R9
+32
+R10
+!i10b 1
+R11
+R12
+R13
+!i113 1
+R14
+R15
+Abehavioral
+R1
+R2
+R3
+R4
+R5
+DEx4 work 4 sipo 0 22 dnC3GoXaYWCi0A^CiXOhY2
+!i122 13
+l19
+L16 18
+VlPUBa1C5]dMBeVE`chB<c1
+!s100 Ho=fIEZ>]ne87^?nCg?7U1
+R9
+32
+!s110 1686746706
+!i10b 1
+!s108 1686746705.000000
+!s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/aleks/Documents/Modelsim/SIPO/SIPO.vhd|
+!s107 C:/Users/aleks/Documents/Modelsim/SIPO/SIPO.vhd|
+!i113 1
+R14
+R15
+w1686743879
+dC:/Users/aleks/Documents/Modelsim/SIPO
+FC:/Users/aleks/Documents/Modelsim/SIPO/SIPO.vhd
+8C:/Users/aleks/Documents/Modelsim/SIPO/SIPO.vhd
+Esipo_tb
+Z16 w1686751778
+R1
+R2
+R3
+R4
+R5
+!i122 788
+R6
+Z17 8C:/Users/aleks/Documents/ModelSim/SIPO/SIPO_TB.vhd
+Z18 FC:/Users/aleks/Documents/ModelSim/SIPO/SIPO_TB.vhd
+l0
+L7 1
+Vo3SJ7MXENSCUaJAoTI?Jm3
+!s100 jeB7We?2OCKkF0@VgG`Rd1
+R9
+32
+R10
+!i10b 1
+R11
+Z19 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/aleks/Documents/ModelSim/SIPO/SIPO_TB.vhd|
+Z20 !s107 C:/Users/aleks/Documents/ModelSim/SIPO/SIPO_TB.vhd|
+!i113 1
+R14
+R15
+Asipo_tb_arch
+R1
+R2
+R3
+R4
+R5
+Z21 DEx4 work 7 sipo_tb 0 22 o3SJ7MXENSCUaJAoTI?Jm3
+!i122 788
+l30
+Z22 L10 56
+Z23 VOJmI;TFf[_>Y=mcI:Y_D:3
+Z24 !s100 C9@z7DnA`jM2KUWX7?U`M0
+R9
+32
+R10
+!i10b 1
+R11
+R19
+R20
+!i113 1
+R14
+R15
+Esynch
+Z25 w1687329238
+R1
+R2
+R3
+R4
+R5
+!i122 786
+R6
+Z26 8C:/Users/aleks/Documents/ModelSim/SIPO/Synch.vhd
+Z27 FC:/Users/aleks/Documents/ModelSim/SIPO/Synch.vhd
+l0
+L6 1
+Vg90HKGo?oZinBK_@lVe?a3
+!s100 lPVziQ<3gBlZk==a<OBLh0
+R9
+32
+R10
+!i10b 1
+R11
+Z28 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/aleks/Documents/ModelSim/SIPO/Synch.vhd|
+Z29 !s107 C:/Users/aleks/Documents/ModelSim/SIPO/Synch.vhd|
+!i113 1
+R14
+R15
+Asynch_arch
+R1
+R2
+R3
+R4
+R5
+DEx4 work 5 synch 0 22 g90HKGo?oZinBK_@lVe?a3
+!i122 786
+l53
+L14 274
+VObJ_bQ7XND?n_g:BB`>zm0
+!s100 faNXc=gej:=HN3c@ade_L0
+R9
+32
+R10
+!i10b 1
+R11
+R28
+R29
+!i113 1
+R14
+R15
+Esynch_tb
+Z30 w1687328449
+R1
+R2
+R3
+R4
+R5
+!i122 787
+R6
+Z31 8C:/Users/aleks/Documents/ModelSim/SIPO/Synch_TB.vhd
+Z32 FC:/Users/aleks/Documents/ModelSim/SIPO/Synch_TB.vhd
+l0
+L6 1
+V^lE]6MT<SU^UNKCT<<Bg23
+!s100 e3LF9hoZZBH[czDO^9K7G1
+R9
+32
+R10
+!i10b 1
+R11
+Z33 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/aleks/Documents/ModelSim/SIPO/Synch_TB.vhd|
+Z34 !s107 C:/Users/aleks/Documents/ModelSim/SIPO/Synch_TB.vhd|
+!i113 1
+R14
+R15
+Asynch_tb_arch
+R1
+R2
+R3
+R4
+R5
+DEx4 work 8 synch_tb 0 22 ^lE]6MT<SU^UNKCT<<Bg23
+!i122 787
+l28
+L9 50
+VKHc]VQYDG::C[4meMV[z]2
+!s100 N21FX@Ko2Ho^F>2nPXY1f1
+R9
+32
+R10
+!i10b 1
+R11
+R33
+R34
+!i113 1
+R14
+R15
